@@ -1,6 +1,6 @@
 # Leonardo Chatbot
 
-Leonardo is a chatbot project named after Leonardo Torres de Quevedo, a famous Spanish inventor. The chatbot utilizes the ollama-python library and the llama index for RAG.
+Leonardo is a chatbot project to explore Local LLMs and Retrieval-Augmented Generation (RAG),named after Leonardo Torres de Quevedo, a famous Spanish inventor. The chatbot utilizes the ollama-python library and the llama index for RAG.
 
 
 ## Tasks
@@ -30,5 +30,5 @@ To be determined...
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+To be determined...
 
