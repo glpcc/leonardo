@@ -3,6 +3,8 @@ from llama_index.core import StorageContext,load_index_from_storage
 from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from llama_index.core import Settings
+from llama_index.core.schema import MetadataMode
+
 import time
 
 
@@ -23,11 +25,12 @@ storage_context = StorageContext.from_defaults(persist_dir=persistent_dir)
 # Create a query engine
 index = load_index_from_storage(storage_context)
 query_engine = index.as_query_engine()
-nodes = query_engine.retrieve("Quien es el autor del pdf Tema2b? por favor indica en que archivo se encuentra?")
+nodes = query_engine.retrieve("Que es un modelo de lente fina? explicamelo en detalle en 8 lineas")
 for node in nodes:
-    print(node)
+    print(node.get_content(metadata_mode=MetadataMode.LLM))
+    print(node.get_content(metadata_mode=MetadataMode.EMBED))
+    print('-----------------HEY-----------------')
 
-response = query_engine.query("Quien es el autor del pdf Tema2b? por favor indica en que archivo se encuentra?")
-print(response.get_formatted_sources())
+response = query_engine.query("Que es un modelo de lente fina? explicamelo en detalle en 8 lineas")
 print(response.response)
 # Perform a quer

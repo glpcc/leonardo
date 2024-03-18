@@ -5,7 +5,32 @@ import time
 
 documents = SimpleDirectoryReader("test_data_folder/uni_data", recursive=True).load_data()
 
-print(*documents, sep="\n")
+good_documents = []
+for i in documents:
+    if i.get_text() != "":
+        i.excluded_embed_metadata_keys = [
+            "file_name",
+            "file_type",
+            "file_size",
+            "creation_date",
+            "last_modified_date",
+            "last_accessed_date",
+        ]
+        i.excluded_llm_metadata_keys = [
+            "file_name",
+            "file_size",
+            "file_type",
+            "creation_date",
+            "last_modified_date",
+            "last_accessed_date",
+        ]
+        good_documents.append(i)
+    else:
+        print("Empty document found")
+
+# for i in documents:
+#     print(i.to_embedchain_format())
+
 # Set the embeddings model
 Settings.embed_model = HuggingFaceEmbedding(
     model_name="intfloat/multilingual-e5-base",
@@ -13,8 +38,7 @@ Settings.embed_model = HuggingFaceEmbedding(
 )
 
 
-# print(Settings.embed_model.get_text_embedding("What did the author do growing up?"))
 # Build the index
-index = VectorStoreIndex.from_documents(documents,show_progress=True)
+index = VectorStoreIndex.from_documents(good_documents,show_progress=True)
 index.storage_context.persist("vector_stores/multilingual_e5_base")
 
